@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap CSS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+
+
+<title>Necesito ayuda</title>
+</head>
+<body>
+<div class="container">
+	<nav class="navbar navbar-dark bg-primary">
+	<div align="right">
+ 	</div>
+ 	</nav>
+	
+	<div class="starter-template">
+		<h1>Necesito ayuda</h1>		
+	</div>
+	
+	<div>
+		<form class="form-horizontal" th:action="@{/askTurn/submit}" th:object="${turn}" th:method="POST">
+		<div class="form-group">
+				<label class="col-md-4 control-label" for="category">Módulo</label>
+				<div class="col-md-4">
+					<select id="signature" name="signature" class="form-control">
+						<option th:each="signature : ${listSignature}"
+							th:value="${signature.initials}" th:text="${signature.name}">
+						</option>
+					</select>
+				</div>
+			</div>
+
+			<!-- Button -->
+			<div class="form-group">
+				<label class="col-md-4 control-label" for="addItem"></label>
+				<div class="col-md-4">
+					<button id="addItem" name="addItem" class="btn btn-primary">Solicitar
+					</button>
+				<a href="/index"><button type="button" class="btn btn-danger">Atrás</button></a>
+				</div>
+			</div>
+	</div>
+	
+</div>
+</body>
+</html>

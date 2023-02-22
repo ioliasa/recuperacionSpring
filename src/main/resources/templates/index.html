@@ -18,9 +18,30 @@
 	<nav class="navbar navbar-dark bg-primary">
 	<div align="right">
   		 <form class="form-inline">
+  		 		<!-- 
+  		 				***************************************************************
+  		 				Si es un estudiante muestro el botón para que pueda pedir turno
+                        ***************************************************************
+  		 		 -->
+  		 		<a th:if ="${#authentication.principal.role} == 'STUDENT'" th:href="@{/askTurn}"><button type="button" class="btn btn-primary">Solicitar turno</button></a>
+  		 
     			<a th:href="@{/logout}"><button type="button" class="btn btn-primary">Log Out</button></a>
  		 </form>
  	</div>
+ 	<div align="left">
+ 	<!-- 
+  		 				***************************************************************
+  		 				Si es un profesor muestro el menú de búsqueda
+                        ***************************************************************
+  		 		 -->
+ 	<form th:if ="${#authentication.principal.role} == 'TEACHER'" class="form-inline" th:action="@{/index}">
+		Filter: <input type="text" class="btn btn-primary" name="keyword" id="keyword" size="50" th:value="${keyword}" required />
+		&nbsp;
+		<input type="submit" value="Search" class="btn btn-primary"/>
+		&nbsp;
+		<input type="button" value="Clear" id="btnClear" onclick="clearSearch()" class="btn btn-primary" />
+	</form>
+	</div>
  	</nav>
 	
 	<div class="starter-template">
@@ -42,8 +63,32 @@
 			<tr th:each="turn :${list}">
 				<td th:text="${turn.jacarandenno.name}"></td>
 				<td th:text="${turn.signature.name}"></td>
-				<td th:text="${#temporals.format(turn.time,'dd-MM-yyyy HH:mm')}"></td>
-				<td th:text="${turn.done}"></td>
+				<!-- 
+  		 				*********************************************************************************************************
+  		 				Antes sólo mostraba horas y minutos, por lo que no lo encontraba cuando lo buscaba, le pongo los segundos
+                        *********************************************************************************************************
+  		 		 -->
+				<td th:text="${#temporals.format(turn.time,'dd-MM-yyyy HH:mm:ss')}"></td>
+				<!-- 
+  		 				***************************************************************
+  		 				Muestro un botón u otro en función del campo done
+                        ***************************************************************
+  		 		 -->
+				<td>
+					<img class="img-fluid logo" width="40" height="40" th:src="@{/rojo.jpeg}" th:if="${turn.done==false}"/>
+					<img class="img-fluid logo"  width="40" height="40" th:src="@{/verde.jpeg}" th:unless="${turn.done==false}"/>
+				</td>
+				<!-- 
+  		 				***************************************************************
+  		 				Si es un profesor muestro al lado de cada turno la opción de
+  		 				atender el turno. Tengo que pasarle la pk del turno  por lo 
+  		 				que le paso  el username, las iniciales del módulo y la fecha
+                        ***************************************************************
+  		 		 -->
+				<td>
+					<a th:if ="${#authentication.principal.role} == 'TEACHER'" th:href="@{'/assist?username=' + ${turn.jacarandenno.username} +'&initials=' + ${turn.signature.initials}+ '&time='+ ${#temporals.format(turn.time,'dd-MM-yyyy HH:mm:ss')}}"><button type="button" class="btn btn-primary">Atender</button></a>
+  		 
+				</td>
 			</tr>
 		</tbody>
 		</table>
@@ -51,4 +96,14 @@
 	
 </div>
 </body>
+<!-- 
+  	***************************************************************
+  	Para el botón de limpiar
+    ***************************************************************
+  		 		 -->
+<script type="text/javascript">
+	function clearSearch() {
+		window.location = "[[@{/index}]]";
+	}
+</script>
 </html>

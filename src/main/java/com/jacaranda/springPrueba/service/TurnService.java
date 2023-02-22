@@ -1,6 +1,9 @@
 package com.jacaranda.springPrueba.service;
 
+
+import java.time.LocalDateTime;
 import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,12 +18,22 @@ public class TurnService {
 	TurnRepository repository;
 	
 	
+	
+	
 	public List<Turn> getTurns(){
 		return repository.findAllByOrderByTimeDesc();
 	}
 	
-	public List<Turn> getTurnsToDo(){
-		return repository.findToDo();
+	public Turn getTurn(String jacarandenno, String signature, LocalDateTime time) {
+		
+		return repository.findTurn(jacarandenno, signature, time);
+	}
+	
+	public List<Turn> getTurnsToDo(String keyword){
+		if (keyword == null)
+			return repository.findToDo();
+		else
+			return repository.findByLikeSignatureName("%" + keyword +"%");
 	}
 	
 	public Turn save(Turn turn) {

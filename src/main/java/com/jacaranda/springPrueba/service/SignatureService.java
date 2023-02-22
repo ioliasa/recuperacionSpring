@@ -1,5 +1,7 @@
 package com.jacaranda.springPrueba.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,4 +18,7 @@ public class SignatureService {
 		return repository.findById(id).orElse(null);
 	}
 
+	public List<Signature> getSignatures(){
+		return repository.findAll();
+	}
 }
