@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.jacaranda</groupId>
-	<artifactId>springPrueba</artifactId>
+	<artifactId>springRecuperacion</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>springPrueba</name>
-	<description>PruebaSpring</description>
+	<description>springRecuperacion</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
