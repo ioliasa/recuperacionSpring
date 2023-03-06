@@ -51,7 +51,7 @@ CREATE TABLE live (
 CREATE TABLE user (
    username varchar(40) primary key,
    password varchar(40),
-   role INTEGER,
+   role INTEGER
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
    
 
